@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "nama": "Bono Cooper",
+    "nim": "134905646",
+    "gender": "L",
+    "email": "Bono.cooper@gmail.com",
+    "status": "pending"
+  },
+  {
+    "id": 2,
+    "nama": "Alexander",
+    "nim": "134986PRO",
+    "gender": "L",
+    "email": "Alexanderrr@gmail.com",
+    "status": "pending"
+  },
+  {
+    "id": 3,
+    "nama": "Felicia",
+    "nim": "134905666",
+    "gender": "P",
+    "email": "Felicia.mlk@gmail.com",
+    "status": "pending"
+  },
+  {
+    "id": 4,
+    "nama": "Leslie",
+    "nim": "134986345",
+    "gender": "P",
+    "email": "Lesliie@gmail.com",
+    "status": "pending"
+  }
+]

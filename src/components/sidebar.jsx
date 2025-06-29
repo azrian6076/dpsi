@@ -27,9 +27,8 @@ export default function Sidebar({ isOpen, toggleSidebar, role }) {
     // Menu untuk Mitra
     const mitraMenu = [
         { to: "dashboard", icon: "/assets/icons/icons8-home-100.png", label: "Dashboard" },
-        // --- PERBAIKAN DI SINI ---
-        { to: "pengajuan-proyek", icon: "/assets/icons/icons8-project-management-100.png", label: "Pengajuan Projek" },
-        { to: "student-list-register", icon: "/assets/icons/icons8-list-student-register-64.png", label: "Pendaftar" },
+        { to: "pengajuan-proyek", icon: "/assets/icons/icons8-project-management-100.png", label: "Pengajuan Projek" },        
+        { to: "project/applicants", icon: "/assets/icons/icons8-list-student-register-64.png", label: "Pendaftar Proyek" }, // Label juga bisa diganti agar lebih jelas        
         { to: "manage-account-partner", icon: "/assets/icons/icons8-manage-account-100.png", label: "Kelola Akun" },
     ];
 
@@ -49,6 +48,7 @@ export default function Sidebar({ isOpen, toggleSidebar, role }) {
             menuItems = [];
     }
  
+  
     return (
         <div className={`w-full h-full flex flex-col items-center bg-primary overflow-hidden`}>
             {/* Header with logo and toggle button */}

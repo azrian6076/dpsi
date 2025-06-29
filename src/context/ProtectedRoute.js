@@ -1,53 +1,50 @@
+import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
-export function ProtectedRoute({ children, allowedRoles }) {
-  const { user, loading } = useAuth();
+// --- Komponen ProtectedRoute yang sudah dilengkapi "Detektif" ---
+export const ProtectedRoute = ({ children, allowedRoles }) => {
+  const { user } = useAuth();
   const location = useLocation();
 
-  // Show nothing during the initial loading
-  if (loading) return null;
+  // Pesan "Detektif" untuk melihat apa yang terjadi
+  console.log('--- PROTECTED ROUTE CHECK ---');
+  console.log('User saat ini:', user);
+  console.log('Role yang diizinkan:', allowedRoles);
+  console.log('Mencoba akses ke:', location.pathname);
 
+  // 1. Cek apakah user sudah login atau belum
   if (!user) {
-    // Save the attempted URL for redirecting after login
-    sessionStorage.setItem('redirectPath', location.pathname);
-    return <Navigate to="/login" replace />;
+    console.error('HASIL: Gagal! User tidak login. Mengalihkan ke /login...');
+    // Redirect ke halaman login, simpan lokasi yang ingin dituju
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/unauthorized" replace />;
+  // 2. Cek apakah role user diizinkan
+  const isAuthorized = allowedRoles.includes(user.role);
+
+  if (!isAuthorized) {
+    console.error(`HASIL: Gagal! Role user ('${user.role}') tidak ada di dalam daftar yang diizinkan (${allowedRoles.join(', ')}). Mengalihkan ke /unauthorized...`);
+    // Redirect ke halaman "tidak diizinkan"
+    return <Navigate to="/unauthorized" state={{ from: location }} replace />;
   }
 
+  // 3. Jika semua cek lolos, izinkan akses
+  console.log('HASIL: Sukses! Akses diizinkan.');
   return children;
-}
+};
 
-export function AuthRoute({ children }) {
-  const { user, loading } = useAuth();
-  const location = useLocation();
-  
-  // Show nothing during initial loading
-  if (loading) return null;
 
-  if (user) {
-    // Check if there's a saved redirect path
-    const redirectPath = sessionStorage.getItem('redirectPath');
-    if (redirectPath) {
-      sessionStorage.removeItem('redirectPath');
-      return <Navigate to={redirectPath} replace />;
+// --- Komponen AuthRoute (untuk halaman Login/Register) ---
+export const AuthRoute = ({ children }) => {
+    const { user } = useAuth();
+    const location = useLocation();
+
+    if (user) {
+        // Jika sudah login, alihkan dari halaman login/register ke dashboard
+        const targetPath = location.state?.from?.pathname || `/${user.role.toLowerCase()}/dashboard`;
+        return <Navigate to={targetPath} replace />;
     }
-    
-    // Default redirects based on role
-    switch(user.role) {
-      case 'Mahasiswa':
-        return <Navigate to="/student/dashboard" replace />;
-      case 'Dosen':
-        return <Navigate to="/lecturer/dashboard" replace />;
-      case 'Mitra':
-        return <Navigate to="/partner/dashboard" replace />;
-      default:
-        return <Navigate to="/" replace />;
-    }
-  }
 
-  return children;
-}
+    return children;
+};

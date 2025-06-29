@@ -29,70 +29,55 @@ import ManageAccountLecturer from './pages/dosen/ManageAccountLecturer';
 import SettingLecturer from './pages/dosen/SettingLecturer';
 
 // IMPORTS UNTUK HALAMAN MITRA
-import DashboardMitra from './pages/mitra/dashboardPartner'; // <-- HANYA ADA SATU DI SINI
+import DashboardMitra from './pages/mitra/dashboardPartner';
 import SubmitNewProject from './pages/mitra/SubmitNewProject';
 import ProjectListPartner from './pages/mitra/ProjectListPartner';
 import ProjectDetail from './pages/mitra/ProjectDetail';
 import ManageAccountStudentPartner from './pages/mitra/ManageAccountStudentPartner';
 import SettingPartner from './pages/mitra/SettingPartner';
+import ProjectApplicantDetail from './pages/mitra/ProjectApplicantDetail';
 
 export default function App() {
   return (
     <AuthProvider>
-        <Routes>
-          {/* Public routes */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/unauthorized" element={<Unauthorized />} />
-          
-          {/* Auth routes (only accessible when not logged in) */}
-          <Route path="/login" element={
-            <AuthRoute>
-              <Login />
-            </AuthRoute>
-          } />
-          <Route path="/register" element={
-            <AuthRoute>
-              <Register />
-            </AuthRoute>
-          } />
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
-          {/* Student routes */}
-          <Route path="/student" element={
-            <ProtectedRoute allowedRoles={['Mahasiswa']}>
-              <Main role="Mahasiswa" />
-            </ProtectedRoute>
-          }>
-            <Route index element={<DashboardStudent />} />
-            <Route path="dashboard" element={<DashboardStudent />} />
-            <Route path="add-curriculum-vitae" element={<AddCurriculumVitae />} />
-            <Route path="student-portofolio" element={<StudentPortofolio />} />
-            <Route path="project-selection" element={<ProjectSelection />} />
-            <Route path="manage-account-student" element={<ManageAccountStudent />} />
-            <Route path="setting" element={<SettingStudent />} />
-          </Route>
+        {/* Auth routes */}
+        <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
+        <Route path="/register" element={<AuthRoute><Register /></AuthRoute>} />
 
-          {/* Lecturer routes */}
-          <Route path="/lecturer" element={
-            <ProtectedRoute allowedRoles={['Dosen']}>
-              <Main role="Dosen" />
-            </ProtectedRoute>
-          }>
-            <Route index element={<DashboardDosen />} />
-            <Route path="dashboard" element={<DashboardDosen />} />
-            <Route path="proposal-partner" element={<ProposalPartner />} />
-            <Route path="student-data" element={<StudentData />} />
-            <Route path="student-list-register" element={<ListStudentRegister />} />
-            <Route path="progres-project" element={<ProgresProject />} />
-            <Route path="manage-account-lecturer" element={<ManageAccountLecturer />} />
-            <Route path="setting" element={<SettingLecturer />} />
-          </Route>
+        {/* Student routes */}
+        <Route path="/student" element={<ProtectedRoute allowedRoles={['Mahasiswa']}><Main role="Mahasiswa" /></ProtectedRoute>}>
+          <Route index element={<DashboardStudent />} />
+          <Route path="dashboard" element={<DashboardStudent />} />
+          <Route path="add-curriculum-vitae" element={<AddCurriculumVitae />} />
+          <Route path="student-portofolio" element={<StudentPortofolio />} />
+          <Route path="project-selection" element={<ProjectSelection />} />
+          <Route path="manage-account-student" element={<ManageAccountStudent />} />
+          <Route path="setting" element={<SettingStudent />} />
+        </Route>
 
-          {/* Partner routes */}
+        {/* Lecturer routes */}
+        <Route path="/lecturer" element={<ProtectedRoute allowedRoles={['Dosen']}><Main role="Dosen" /></ProtectedRoute>}>
+          <Route index element={<DashboardDosen />} />
+          <Route path="dashboard" element={<DashboardDosen />} />
+          <Route path="proposal-partner" element={<ProposalPartner />} />
+          <Route path="student-data" element={<StudentData />} />
+          <Route path="student-list-register" element={<ListStudentRegister />} />
+          <Route path="progres-project" element={<ProgresProject />} />
+          <Route path="manage-account-lecturer" element={<ManageAccountLecturer />} />
+          <Route path="setting" element={<SettingLecturer />} />
+        </Route>
+
+        {/* Partner routes */}
         <Route path="/partner" element={<ProtectedRoute allowedRoles={['Mitra']}><Main role="Mitra" /></ProtectedRoute>}>
           <Route index element={<DashboardMitra />} />
           <Route path="dashboard" element={<DashboardMitra />} />
           <Route path="pengajuan-proyek">
-            <Route index element={<SubmitNewProject />} /> 
+            <Route index element={<SubmitNewProject />} />
             <Route path="new" element={<ProjectListPartner />} />
             <Route path=":projectId" element={<ProjectDetail />} />
           </Route>
@@ -100,6 +85,7 @@ export default function App() {
           <Route path="project-selection" element={<ProjectSelection />} />
           <Route path="manage-account-partner" element={<ManageAccountStudentPartner />} />
           <Route path="setting" element={<SettingPartner />} />
+          <Route path="project/applicants" element={<ProjectApplicantDetail />} />
         </Route>
 
         {/* 404 */}
