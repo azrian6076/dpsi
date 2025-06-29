@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 export default function Sidebar({ isOpen, toggleSidebar, role }) {
   const navigate = useNavigate();
-  const { logout } = useAuth(); // Make sure this is correctly destructured
+  const { logout } = useAuth();
 
     // Menu untuk Mahasiswa
     const mahasiswaMenu = [
@@ -27,9 +27,9 @@ export default function Sidebar({ isOpen, toggleSidebar, role }) {
     // Menu untuk Mitra
     const mitraMenu = [
         { to: "dashboard", icon: "/assets/icons/icons8-home-100.png", label: "Dashboard" },
-        { to: "submit-new-project", icon: "/assets/icons/icons8-project-management-100.png", label: "Mengajukan Proyek Baru" },
-        { to: "student-list-register", icon: "/assets/icons/icons8-list-student-register-64.png", label: "Mahasiswa Pendaftar " },
-        { to: "project-selection", icon: "/assets/icons/icons8-list-view-select-proyek-96.png", label: "Pemilihan Proyek" },
+        // --- PERBAIKAN DI SINI ---
+        { to: "pengajuan-proyek", icon: "/assets/icons/icons8-project-management-100.png", label: "Pengajuan Projek" },
+        { to: "student-list-register", icon: "/assets/icons/icons8-list-student-register-64.png", label: "Pendaftar" },
         { to: "manage-account-partner", icon: "/assets/icons/icons8-manage-account-100.png", label: "Kelola Akun" },
     ];
 
@@ -48,30 +48,7 @@ export default function Sidebar({ isOpen, toggleSidebar, role }) {
         default:
             menuItems = [];
     }
-
-    // Menu yang sama untuk semua role (setting dan logout)
-    const commonMenu = [
-        { to: "setting", icon: "/assets/icons/icons8-setting-100.png", label: "Pengaturan" },
-        { to: "logout", icon: "/assets/icons/icons8-log-out-100.png", label: "Keluar" }
-    ];
-
-    // Handle menu item click
-    const handleItemClick = (item) => {
-        if (item.to === "logout") {
-            // Log to debug
-            console.log("Logout clicked, logout function:", logout);
-            
-            try {
-                // Call the logout function
-                logout();
-                // Navigate after logout
-                navigate('/login');
-            } catch (error) {
-                console.error("Error during logout:", error);
-            }
-        } 
-    };
-  
+ 
     return (
         <div className={`w-full h-full flex flex-col items-center bg-primary overflow-hidden`}>
             {/* Header with logo and toggle button */}
@@ -108,7 +85,7 @@ export default function Sidebar({ isOpen, toggleSidebar, role }) {
             <ul className="w-full flex flex-col gap-2  p-2">
                 {menuItems.map((item, index) => (
                 <li key={index} className="w-full rounded">
-                    <NavLink to={item.to} className={({isActive}) => 
+                    <NavLink to={item.to} end={item.to === 'dashboard'} className={({isActive}) => 
                     `flex items-center gap-2 text-white ${
                         isActive ? 'bg-secondary font-bold p-2 rounded' : 'hover:bg-secondary p-2 rounded'
                     } ${!isOpen && 'md:justify-center'}`
@@ -141,10 +118,9 @@ export default function Sidebar({ isOpen, toggleSidebar, role }) {
                 onClick={() => {
                     try {
                         logout();
-                        navigate('/login'); // Use the navigate function instead of window.location
+                        navigate('/login');
                     } catch (error) {
                         console.error("Error during logout:", error);
-                        // Fallback if the function fails
                         window.location.href = "/login";
                     }
                 }}

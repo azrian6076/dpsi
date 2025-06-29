@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import mitraData from '../../data/mitra.json';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -32,7 +32,8 @@ const DashboardPartner = () => {
         <div className="space-y-4 mt-6">
           {/* Submit Project */}
           <button
-            onClick={() => navigate('/partner/submit-new-project')}
+            // --- PERBAIKAN 1: Mengarah ke form PEMBUATAN proyek baru ---
+            onClick={() => navigate('/partner/pengajuan-proyek/new')}
             className="w-full border border-gray-300 rounded-lg py-3 px-4 flex flex-col items-center hover:bg-gray-100"
           >
             <span className="font-semibold mb-1">📤 Submit a new project</span>
@@ -44,7 +45,8 @@ const DashboardPartner = () => {
 
           {/* Your Project */}
           <button
-            onClick={() => navigate('/partner/project-selection')}
+            // --- PERBAIKAN 2: Mengarah ke DAFTAR proyek yang sudah ada ---
+            onClick={() => navigate('/partner/pengajuan-proyek')}
             className="w-full border border-gray-300 rounded-lg py-3 px-4 flex flex-col items-center hover:bg-gray-100"
           >
             <span className="font-semibold mb-1">📁 Your Project</span>
@@ -56,6 +58,7 @@ const DashboardPartner = () => {
 
           {/* Student Registrant */}
           <button
+            // --- TIDAK ADA PERUBAHAN: Rute ini sudah benar ---
             onClick={() => navigate('/partner/student-list-register')}
             className="w-full border border-gray-300 rounded-lg py-3 px-4 flex flex-col items-center hover:bg-gray-100"
           >
